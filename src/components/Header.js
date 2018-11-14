@@ -9,6 +9,12 @@ export default class Footer extends PureComponent {
         <img src={logo} alt="logo" className="logo" />
         <span>sponsored by</span>
         <img src={ie6Logo} alt="ie6" />
+
+        <span className="right">
+          <a href="http://www.cutercounter.com/" target="_blank">
+            <img src="http://www.cutercounter.com/hit.php?id=grmacoqo&nd=6&style=24" border="0" alt="website counter" />
+          </a>
+        </span>
       </header>
     );
   }

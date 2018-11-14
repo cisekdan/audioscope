@@ -53,3 +53,7 @@ canvas {
     text-align: center;
     margin-top: 20px;
 }
+
+span.right {
+    float: right;
+}

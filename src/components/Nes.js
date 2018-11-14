@@ -20,6 +20,7 @@ export default class Nes extends PureComponent {
     super(props);
     this.nes = null;
     this.canvas = React.createRef();
+    this.state = { rom: null };
 
     this.loadRom = this.loadRom.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -58,6 +59,7 @@ export default class Nes extends PureComponent {
   }
 
   async loadRom(romData) {
+    this.setState(current => ({ ...current, rom: romData }));
     const { NesJs } = window;
 
     const url = `./roms/${romData.file}`;
@@ -90,7 +92,9 @@ export default class Nes extends PureComponent {
         <RomLoader
           onRomSelect={this.loadRom}
         />
-        <VoiceController />
+        <VoiceController
+          rom={this.state.rom}
+        />
       </div>
     );
   }

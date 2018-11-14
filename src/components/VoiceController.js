@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import annyang from 'annyang';
 
 export default class VoiceController extends PureComponent {
+  static DEFAULT_LANGUAGE = 'en';
+
   static KEY_LEFT = {
     key: 'ArrowLeft',
     charCode: 0,
@@ -66,20 +69,15 @@ export default class VoiceController extends PureComponent {
     which: 90,
   };
 
+  static propTypes = {
+    rom: PropTypes.shape({}),
+  };
+
   componentDidMount() {
     if (!annyang) {
       return;
     }
-    annyang.addCommands({
-      left: () => this.keyPress(VoiceController.KEY_LEFT),
-      right: () => this.keyPress(VoiceController.KEY_RIGHT),
-      up: () => this.keyPress(VoiceController.KEY_UP),
-      down: () => this.keyPress(VoiceController.KEY_DOWN),
-      select: () => this.keyPress(VoiceController.KEY_SELECT),
-      start: () => this.keyPress(VoiceController.KEY_START),
-      a: () => this.keyPress(VoiceController.KEY_A),
-      b: () => this.keyPress(VoiceController.KEY_B),
-    });
+    this.initVoiceRecognition();
 
     annyang.start({
       autoRestart: true,
@@ -90,10 +88,48 @@ export default class VoiceController extends PureComponent {
     annyang.debug();
   }
 
+  componentDidUpdate() {
+    const { commands, commandsLanguage } = this.props.rom;
+    this.initVoiceRecognition(commands, commandsLanguage);
+  }
+
+  initVoiceRecognition(romCommands = null, language = VoiceController.DEFAULT_LANGUAGE) {
+    annyang.removeCommands();
+
+    let commands = {};
+    if (!romCommands) {
+      commands = {
+        left: () => this.keyPress(VoiceController.KEY_LEFT),
+        right: () => this.keyPress(VoiceController.KEY_RIGHT),
+        up: () => this.keyPress(VoiceController.KEY_UP),
+        down: () => this.keyPress(VoiceController.KEY_DOWN),
+        select: () => this.keyPress(VoiceController.KEY_SELECT),
+        start: () => this.keyPress(VoiceController.KEY_START),
+        a: () => this.keyPress(VoiceController.KEY_A),
+        b: () => this.keyPress(VoiceController.KEY_B),
+      };
+    } else {
+      commands = Object.entries(romCommands)
+        .reduce((carry, [key, entries]) => {
+          const fn = () => {
+            entries.forEach(([method, ...args]) => this[method](args));
+          };
+          return { ...carry, [key]: fn }
+        }, {});
+
+      console.log(commands);
+    }
+
+    annyang.addCommands(commands);
+    annyang.setLanguage(language);
+
+  }
+
   keyPress(key, timeout = 50) {
-    document.dispatchEvent(new KeyboardEvent('keydown', key));
+    const keyData = Array.isArray(key) ? key[0] : key;
+    document.dispatchEvent(new KeyboardEvent('keydown', keyData));
     window.setTimeout(() => {
-      document.dispatchEvent(new KeyboardEvent('keyup', key));
+      document.dispatchEvent(new KeyboardEvent('keyup', keyData));
     }, timeout);
   }
 

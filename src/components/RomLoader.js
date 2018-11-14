@@ -29,7 +29,9 @@ export default class RomLoader extends PureComponent {
       <div className="rom-loader">
         <select onChange={this.onRomChange}>
           <option key="select" defaultValue value={null}>Please select rom</option>
-          {Object.entries(roms).map(([key, rom]) => (<option key={key} value={key}>{rom.name}</option>))}
+          {Object.entries(roms)
+            .sort()
+            .map(([key, rom]) => (<option key={key} value={key}>{rom.name}</option>))}
         </select>
       </div>
     );

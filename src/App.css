@@ -34,6 +34,10 @@ canvas {
     margin-right: auto;
     display: block;
     background: black;
+    background-image: url('./images/chuck.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: 50%;
 }
 
 .tv {

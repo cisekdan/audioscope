@@ -62,3 +62,6 @@ typings/
 
 .idea
 *.iml
+
+public/roms
+!public/roms/*.json

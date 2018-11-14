@@ -99,25 +99,30 @@ export default class VoiceController extends PureComponent {
     let commands = {};
     if (!romCommands) {
       commands = {
-        left: () => this.keyPress(VoiceController.KEY_LEFT),
-        right: () => this.keyPress(VoiceController.KEY_RIGHT),
-        up: () => this.keyPress(VoiceController.KEY_UP),
-        down: () => this.keyPress(VoiceController.KEY_DOWN),
-        select: () => this.keyPress(VoiceController.KEY_SELECT),
-        start: () => this.keyPress(VoiceController.KEY_START),
-        a: () => this.keyPress(VoiceController.KEY_A),
-        b: () => this.keyPress(VoiceController.KEY_B),
+        left: () => this.keyPress([VoiceController.KEY_LEFT]),
+        right: () => this.keyPress([VoiceController.KEY_RIGHT]),
+        up: () => this.keyPress([VoiceController.KEY_UP]),
+        down: () => this.keyPress([VoiceController.KEY_DOWN]),
+        select: () => this.keyPress([VoiceController.KEY_SELECT]),
+        start: () => this.keyPress([VoiceController.KEY_START]),
+        a: () => this.keyPress([VoiceController.KEY_A]),
+        b: () => this.keyPress([VoiceController.KEY_B]),
       };
     } else {
+
+      const asyncForEach = async (array, callback) => {
+        for (let index = 0; index < array.length; index++) {
+          await callback(array[index], index, array);
+        }
+      };
       commands = Object.entries(romCommands)
         .reduce((carry, [key, entries]) => {
-          const fn = () => {
-            entries.forEach(([method, ...args]) => this[method](args));
+          const fn = async () => {
+            await asyncForEach(entries, ([method, ...args]) => this[method](args));
           };
           return { ...carry, [key]: fn }
         }, {});
 
-      console.log(commands);
     }
 
     annyang.addCommands(commands);
@@ -125,12 +130,27 @@ export default class VoiceController extends PureComponent {
 
   }
 
-  keyPress(key, timeout = 50) {
-    const keyData = Array.isArray(key) ? key[0] : key;
-    document.dispatchEvent(new KeyboardEvent('keydown', keyData));
-    window.setTimeout(() => {
-      document.dispatchEvent(new KeyboardEvent('keyup', keyData));
-    }, timeout);
+  async keyPress([key, timeout = 150]) {
+    this.keyHold([key]);
+    return new Promise((resolve) => {
+      window.setTimeout(() => {
+        this.keyRelease([key]);
+        resolve();
+      }, timeout);
+    });
+
+  }
+
+  keyHold([key]) {
+    document.dispatchEvent(new KeyboardEvent('keydown', key));
+  }
+
+  keyRelease([key]) {
+    document.dispatchEvent(new KeyboardEvent('keyup', key));
+  }
+
+  delay([delay]) {
+    return new Promise((resolve) => setTimeout(() => resolve(), delay));
   }
 
   render() {

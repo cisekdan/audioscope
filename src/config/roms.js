@@ -15,5 +15,36 @@ export default {
       b: [['keyPress', VoiceController.KEY_B]],
     },
     commandsLanguage: 'pl',
+  },
+  contra: {
+    name: 'Contra',
+    file: 'contra.nes',
+    commands: {
+      // konami code
+      'lifes': [
+        ['keyPress', VoiceController.KEY_UP],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_UP],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_DOWN],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_DOWN],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_LEFT],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_RIGHT],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_LEFT],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_RIGHT],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_B],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_A],
+        ['delay', 50],
+        ['keyPress', VoiceController.KEY_START],
+        ['delay', 50]
+      ],
+    },
   }
 };

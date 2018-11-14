@@ -19,12 +19,20 @@ export default class Nes extends PureComponent {
     super(props);
     this.nes = null;
     this.canvas = React.createRef();
+
     this.loadRom = this.loadRom.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onKeyUp = this.onKeyUp.bind(this);
   }
 
   componentDidMount() {
     const canvas = this.canvas.current;
     this.initNes(canvas);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this.onKeyDown, false);
+    document.removeEventListener("keyup", this.onKeyUp, false);
   }
 
   initNes(canvas) {
@@ -34,7 +42,18 @@ export default class Nes extends PureComponent {
     nes.setDisplay(new NesJs.Display(canvas));
     nes.setAudio(new NesJs.Audio());
 
+    document.addEventListener("keydown", this.onKeyDown, false);
+    document.addEventListener("keyup", this.onKeyUp, false);
+
     this.nes = nes;
+  }
+
+  onKeyDown(e) {
+    this.nes.handleKeyDown(e);
+  }
+
+  onKeyUp(e) {
+    this.nes.handleKeyUp(e);
   }
 
   async loadRom(romData) {
@@ -49,18 +68,6 @@ export default class Nes extends PureComponent {
     this.nes.setRom(rom);
     this.nes.bootup();
     this.nes.run();
-
-    // var request = new XMLHttpRequest();
-    // request.responseType = 'arraybuffer';
-    // request.onload = function() {
-    //   var buffer = request.response;
-    //   // console.log(buffer);
-    //   const rom = new NesJs.Rom(buffer);
-    //   //
-    //   // this.nes.setRom(rom);
-    // };
-    // request.open('GET', url, true);
-    // request.send(null);
   }
 
   render() {
@@ -73,9 +80,6 @@ export default class Nes extends PureComponent {
           id={this.props.displayId}
           width={this.props.width}
           height={this.props.height}
-          onDragEnter={e => e.stopPropagation()}
-          onDragEnter={e => e.stopPropagation()}
-          onDrop={e => console.log(e)}
         />
       </div>
     );

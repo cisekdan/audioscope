@@ -118,7 +118,7 @@ export default class VoiceController extends PureComponent {
       commands = Object.entries(romCommands)
         .reduce((carry, [key, entries]) => {
           const fn = async () => {
-            await asyncForEach(entries, ([method, ...args]) => this[method](args));
+            await asyncForEach(entries, ([method, ...args]) => typeof method === 'function' ? method(args) : this[method](args));
           };
           return { ...carry, [key]: fn }
         }, {});

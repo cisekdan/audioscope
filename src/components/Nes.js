@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as nesjs from 'nes-js';
 
 import RomLoader from './RomLoader';
+import VoiceController from './VoiceController';
 
 export default class Nes extends PureComponent {
   static propTypes = {
@@ -42,8 +43,8 @@ export default class Nes extends PureComponent {
     nes.setDisplay(new NesJs.Display(canvas));
     nes.setAudio(new NesJs.Audio());
 
-    document.addEventListener("keydown", this.onKeyDown, false);
-    document.addEventListener("keyup", this.onKeyUp, false);
+    document.addEventListener('keydown', this.onKeyDown, false);
+    document.addEventListener('keyup', this.onKeyUp, false);
 
     this.nes = nes;
   }
@@ -89,6 +90,7 @@ export default class Nes extends PureComponent {
         <RomLoader
           onRomSelect={this.loadRom}
         />
+        <VoiceController />
       </div>
     );
   }

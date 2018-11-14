@@ -57,3 +57,22 @@ canvas {
 span.right {
     float: right;
 }
+
+.command-list {
+    background: white;
+}
+
+.command-list span {
+    font-weight: bolder;
+}
+
+.command-list ul {
+    list-style: none;
+    display: inline;
+}
+
+.command-list li {
+    margin-right: 15px;
+    display: inline;
+    font-style: italic;
+}

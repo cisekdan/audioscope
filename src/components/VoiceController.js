@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import annyang from 'annyang';
 
 export default class VoiceController extends PureComponent {
-  static DEFAULT_LANGUAGE = 'en';
+  static DEFAULT_LANGUAGE = 'en-US';
 
   static KEY_LEFT = {
     key: 'ArrowLeft',
@@ -154,6 +154,21 @@ export default class VoiceController extends PureComponent {
   }
 
   render() {
-    return (<span></span>);
+    const { rom } = this.props;
+    if (!rom) {
+      return null;
+    }
+    const { commands } = rom;
+    if (!commands) {
+      return null;
+    }
+    return (
+      <div className="command-list">
+        <span>Available commands: </span>
+        <ul>
+          {Object.keys(commands).map(command => <li key={command}>"{command}"</li>)}
+        </ul>
+      </div>
+      );
   }
 }

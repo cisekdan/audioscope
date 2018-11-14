@@ -1,3 +1,33 @@
+body {
+    background-repeat: repeat;
+    background-size: contain;
+    background-image: url('./images/bg.jpg');
+}
+
 canvas {
     border: solid 1px black;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    background: black;
+}
+
+.tv {
+    background-image: url('./images/tv.png');
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    background-position-x: center;
+    padding-top: 25px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rom-loader {
+    text-align: center;
+    margin-top: 20px;
 }

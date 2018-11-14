@@ -73,13 +73,21 @@ export default class Nes extends PureComponent {
   render() {
     return (
       <div className="nes">
+        <div className="tv" style={{
+          height: this.props.height + 40,
+          width: this.props.width + 250,
+        }}>
+          <canvas
+            ref={this.canvas}
+            id={this.props.displayId}
+            style={{
+              width: this.props.width,
+              height: this.props.height,
+            }}
+          />
+        </div>
         <RomLoader
-          onRomSelect={this.loadRom} />
-        <canvas
-          ref={this.canvas}
-          id={this.props.displayId}
-          width={this.props.width}
-          height={this.props.height}
+          onRomSelect={this.loadRom}
         />
       </div>
     );

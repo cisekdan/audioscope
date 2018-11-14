@@ -18,12 +18,15 @@ export default class RomLoader extends PureComponent {
     const { target: { value: identifier } } = e;
     const { [identifier]: rom } = roms;
 
+    if (!rom) {
+      return;
+    }
     this.props.onRomSelect(rom);
   }
 
   render() {
     return (
-      <div className="loader">
+      <div className="rom-loader">
         <select onChange={this.onRomChange}>
           <option key="select" defaultValue value={null}>Please select rom</option>
           {Object.entries(roms).map(([key, rom]) => (<option key={key} value={key}>{rom.name}</option>))}

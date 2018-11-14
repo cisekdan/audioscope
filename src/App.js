@@ -7,8 +7,8 @@ class App extends Component {
     return (
       <div className="App">
         <Nes
-          width={256}
-          height={240}
+          width={512}
+          height={480}
         />
       </div>
     );

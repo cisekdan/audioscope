@@ -64,4 +64,3 @@ typings/
 *.iml
 
 public/roms
-!public/roms/*.json

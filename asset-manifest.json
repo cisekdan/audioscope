@@ -1,0 +1,16 @@
+{
+  "main.css": "/audioscope/static/css/main.3f2a1685.chunk.css",
+  "main.js": "/audioscope/static/js/main.1f601fca.chunk.js",
+  "main.js.map": "/audioscope/static/js/main.1f601fca.chunk.js.map",
+  "static/js/1.151b196c.chunk.js": "/audioscope/static/js/1.151b196c.chunk.js",
+  "static/js/1.151b196c.chunk.js.map": "/audioscope/static/js/1.151b196c.chunk.js.map",
+  "runtime~main.js": "/audioscope/static/js/runtime~main.ad04eb50.js",
+  "runtime~main.js.map": "/audioscope/static/js/runtime~main.ad04eb50.js.map",
+  "static/media/ie6.png": "/audioscope/static/media/ie6.39ebec55.png",
+  "static/media/App.css": "/audioscope/static/media/tv.0ee65bfe.png",
+  "static/media/logo.png": "/audioscope/static/media/logo.e42fe8a0.png",
+  "static/css/main.3f2a1685.chunk.css.map": "/audioscope/static/css/main.3f2a1685.chunk.css.map",
+  "index.html": "/audioscope/index.html",
+  "precache-manifest.13c37663387d695f82ab72c9d0ff4fba.js": "/audioscope/precache-manifest.13c37663387d695f82ab72c9d0ff4fba.js",
+  "service-worker.js": "/audioscope/service-worker.js"
+}
